@@ -1,6 +1,7 @@
-import { buildSchema } from "graphql";
+// import { buildSchema } from "graphql";
+import { gql } from "apollo-server-express";
 
-const graphQLSchema = buildSchema(`
+const graphQLSchema = gql(`
     type User {
         _id: ID!,
         name: String!,
@@ -21,16 +22,12 @@ const graphQLSchema = buildSchema(`
         password: String!
     }
 
-    type RootQuery {
+    type Query {
         login(email: String!, password: String!): AuthData!
     }
 
-    type RootMutation {
+    type Mutation {
         createUser(userInput: UserInput): User
-    }
-    schema {
-        query: RootQuery
-        mutation: RootMutation
     }
 `)
 

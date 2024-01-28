@@ -2,13 +2,12 @@ import dotenv from 'dotenv';
 import express from 'express';
 import mongoose from 'mongoose';
 import bodyParser from 'body-parser';
-import { graphqlHTTP } from "express-graphql";
-import functions from 'firebase-functions';
+import {ApolloServer} from 'apollo-server-express';
 import graphQLSchema from './graphql/schema/index.js';
 import rootResolver from './graphql/resolver/index.js';
 
 dotenv.config();
-const app = express();
+export const app = express();
 
 app.use(bodyParser.json());
 
@@ -22,20 +21,33 @@ app.use((req, res, next) => {
     next();
 })
 
-app.use('/graphql', graphqlHTTP({
-    schema: graphQLSchema,
-    rootValue: rootResolver,
-    graphiql: true
-}))
+const connectDB = async () => {
+    try {
+        await mongoose.connect(`mongodb+srv://admin:masterkey1234@cluster0.dgzs0zh.mongodb.net/auth-app?retryWrites=true&w=majority`);
+        console.log('MongoDB connected')
+    } catch (error) {
+        console.log(error);
+    }
+}
 
-// mongoose.connect(`mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}@cluster0.dgzs0zh.mongodb.net/${process.env.MONGO_DB}?retryWrites=true&w=majority`)
-mongoose.connect(`mongodb+srv://admin:masterkey1234@cluster0.dgzs0zh.mongodb.net/auth-app?retryWrites=true&w=majority`)
-.then(()=>{
-    app.listen(3001);
-    console.log("Connected to MongoDB!")
-})
-.catch(err => {
-    console.log(err)
-})
+async function start(){
+    const apolloServer = new ApolloServer({
+        typeDefs: graphQLSchema,
+        resolvers: rootResolver
+    })
 
-export const api = functions.https.onRequest(app);
+    await apolloServer.start();
+
+    apolloServer.applyMiddleware({
+        app
+    })    
+
+    app.get('*', (req,res) => res.status(404).send('Error 404 - Page not found'))
+
+    app.listen(3001, () => {
+        console.log('Server alive on port:', 3001)
+    })
+}
+
+connectDB();
+start();
