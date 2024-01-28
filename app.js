@@ -33,7 +33,8 @@ const connectDB = async () => {
 async function start(){
     const apolloServer = new ApolloServer({
         typeDefs: graphQLSchema,
-        resolvers: rootResolver
+        resolvers: rootResolver,
+        persistedQueries: false
     })
 
     await apolloServer.start();
@@ -44,8 +45,8 @@ async function start(){
 
     app.get('*', (req,res) => res.status(404).send('Error 404 - Page not found'))
 
-    app.listen(3001, () => {
-        console.log('Server alive on port:', 3001)
+    app.listen(3002, () => {
+        console.log('Server alive on port:', 3002)
     })
 }
 
