@@ -5,7 +5,7 @@ Authentication App is an example of login/signup functionalities made using Expr
 Currently, two official plugins are available:
 
 ## Frontend Technologies used:
-  - ViteJs + React
+  - ViteJs + React + TypeScript
   - TailwindCSS + DaisyUI
   - Formik & Yup for form validation
 
