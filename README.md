@@ -2,8 +2,6 @@
 
 Authentication App is an example of login/signup functionalities made using ExpressJs and GraphQL
 
-Currently, two official plugins are available:
-
 ## Frontend Technologies used:
   - ViteJs + React + TypeScript
   - TailwindCSS + DaisyUI
