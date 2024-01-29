@@ -13,6 +13,7 @@ Currently, two official plugins are available:
   - NodeJs
   - Express
   - GraphQL
+  - MongoDB
 
 The App's deployed using Vercel at: https://auth-app-virid-rho.vercel.app/
 
