@@ -14,6 +14,8 @@ Currently, two official plugins are available:
   - Express
   - GraphQL
 
+The App's deployed using Vercel at: https://auth-app-virid-rho.vercel.app/
+
 ### `npm run dev`
 
 Runs the app in the development mode.\
